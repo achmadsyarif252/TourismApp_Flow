@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TourismRepository private constructor(
+class TourismRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
@@ -27,14 +27,6 @@ class TourismRepository private constructor(
         @Volatile
         private var instance: TourismRepository? = null
 
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localData: LocalDataSource,
-            appExecutors: AppExecutors
-        ): TourismRepository =
-            instance ?: synchronized(this) {
-                instance ?: TourismRepository(remoteData, localData, appExecutors)
-            }
     }
 
     override fun getAllTourism(): Flow<Resource<List<Tourism>>> =
